@@ -248,6 +248,24 @@
                 max-width: 40vw;
             }
         }
+
+        .redirect-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.85);
+            border: 1px solid #0f0;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            font-size: clamp(0.7em, 1.5vw, 0.95em);
+            padding: 8px 20px;
+            border-radius: 4px;
+            z-index: 100;
+            text-align: center;
+            letter-spacing: 0.1em;
+            box-shadow: 0 0 15px rgba(0,255,0,0.3);
+        }
     </style>
 </head>
 <body>
@@ -258,6 +276,7 @@
 
     <canvas class="matrix"></canvas>
     <div class="scanline"></div>
+    <div class="redirect-bar" id="redirectBar">⟶ REDIRECTING IN <span id="countdown">10</span>s ...</div>
     
     <div class="container">
         <div class="glitch">SYSTEM BREACHED</div>
@@ -333,6 +352,20 @@
             columns = Math.floor(canvas.width / fontSize);
             drops = Array(columns).fill(1);
         });
+
+        // Countdown redirect
+        let timeLeft = 10;
+        const countdownEl = document.getElementById('countdown');
+        const redirectURL = 'https://mekniahmed.github.io/shortlife/';
+
+        const timer = setInterval(() => {
+            timeLeft--;
+            countdownEl.textContent = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                window.location.href = redirectURL;
+            }
+        }, 1000);
     </script>
 </body>
 </html>
